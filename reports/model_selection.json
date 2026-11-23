@@ -1,0 +1,107 @@
+{
+    "champion": {
+        "model_name": "GradientBoosting",
+        "display_name": "Gradient Boosting",
+        "best_cv_r2": 0.9905,
+        "criteria": {
+            "validation_r2_pct": 99.05,
+            "training_r2_pct": 99.98,
+            "r2_gap_pct": 0.93,
+            "model_size_mb": 2.7923,
+            "training_time_seconds": 11.205,
+            "prediction_time_ms": 88.9829
+        },
+        "best_params": {
+            "scaler_type": "standard",
+            "n_estimators": 600,
+            "learning_rate": 0.06955325730232478,
+            "max_depth": 6,
+            "min_samples_split": 10,
+            "min_samples_leaf": 10,
+            "subsample": 0.832830598835963
+        },
+        "explanation": "Gradient Boosting is selected as champion: validation R2 = 99.05%, gap = 0.93pp (limit 5.0%), model size = 2.792 MB, train time = 11.21s, prediction latency = 88.98ms (selection cost = 0.0000)."
+    },
+    "selection_policy": {
+        "max_r2_gap_pct": 5.0,
+        "r2_tolerance_pct": 1.0,
+        "weights": {
+            "model_size_mb": 0.4,
+            "training_time_seconds": 0.3,
+            "prediction_time_ms": 0.3
+        },
+        "fallback_used": false
+    },
+    "LinearRegression": {
+        "best_params": {
+            "scaler_type": "standard"
+        },
+        "training_r2_pct": 78.8,
+        "validation_r2_pct": 78.39,
+        "r2_gap_pct": 0.41,
+        "best_cv_r2": 0.7839,
+        "model_size_mb": 0.002,
+        "training_time_seconds": 0.0275,
+        "prediction_time_ms": 86.9455,
+        "eligible": true,
+        "status": "ELIGIBLE"
+    },
+    "DecisionTree": {
+        "best_params": {
+            "scaler_type": "minmax",
+            "max_depth": 16,
+            "min_samples_split": 13,
+            "min_samples_leaf": 4,
+            "max_features": "log2"
+        },
+        "training_r2_pct": 94.98,
+        "validation_r2_pct": 88.66,
+        "r2_gap_pct": 6.31,
+        "best_cv_r2": 0.8866,
+        "model_size_mb": 0.0618,
+        "training_time_seconds": 0.0116,
+        "prediction_time_ms": 77.3889,
+        "eligible": false,
+        "status": "DISQUALIFIED_GAP"
+    },
+    "RandomForest": {
+        "best_params": {
+            "scaler_type": "standard",
+            "n_estimators": 300,
+            "max_depth": 16,
+            "min_samples_split": 10,
+            "min_samples_leaf": 4,
+            "max_features": 1.0
+        },
+        "training_r2_pct": 98.89,
+        "validation_r2_pct": 96.89,
+        "r2_gap_pct": 2.0,
+        "best_cv_r2": 0.9689,
+        "model_size_mb": 13.1248,
+        "training_time_seconds": 3.1332,
+        "prediction_time_ms": 3482.3705,
+        "eligible": true,
+        "status": "ELIGIBLE"
+    },
+    "GradientBoosting": {
+        "best_params": {
+            "scaler_type": "standard",
+            "n_estimators": 600,
+            "learning_rate": 0.06955325730232478,
+            "max_depth": 6,
+            "min_samples_split": 10,
+            "min_samples_leaf": 10,
+            "subsample": 0.832830598835963
+        },
+        "training_r2_pct": 99.98,
+        "validation_r2_pct": 99.05,
+        "r2_gap_pct": 0.93,
+        "best_cv_r2": 0.9905,
+        "model_size_mb": 2.7923,
+        "training_time_seconds": 11.205,
+        "prediction_time_ms": 88.9829,
+        "eligible": true,
+        "selection_cost": 0.0,
+        "status": "CHAMPION"
+    }
+}

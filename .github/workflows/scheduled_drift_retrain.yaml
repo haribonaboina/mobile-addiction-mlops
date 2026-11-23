@@ -1,0 +1,67 @@
+name: Scheduled Production Data Drift Check & Continuous Retraining
+
+on:
+  schedule:
+    - cron: "0 2 * * 1"  # Weekly every Monday at 02:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+env:
+  PYTHON_VERSION: "3.11"
+
+jobs:
+  check-drift-and-retrain:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: pip
+          cache-dependency-path: requirements-dvc.txt
+
+      - name: Install dependencies
+        run: pip install -r requirements-dvc.txt
+
+      - name: Run statistical drift check
+        id: drift_check
+        run: |
+          python src/monitor_drift.py --generate-sample-data
+          if [ -f reports/drift_alert.md ]; then
+            cat reports/drift_alert.md >> "$GITHUB_STEP_SUMMARY"
+          fi
+          python - <<'PY'
+          import json, sys
+          report = json.load(open("reports/drift_report.json"))
+          if report.get("dataset_drift_detected"):
+              print("DRIFT_DETECTED=true")
+              with open(os.environ['GITHUB_ENV'], 'a') as f:
+                  f.write("DRIFT_DETECTED=true\n")
+          else:
+              print("No drift detected.")
+          PY
+
+      - name: Trigger Continuous Retraining Pipeline (dvc repro)
+        if: env.DRIFT_DETECTED == 'true'
+        run: |
+          echo "Drift detected above threshold! Retraining pipeline..."
+          dvc repro
+          pytest tests/ -v
+
+      - name: Upload updated reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: drift-and-retraining-artifacts
+          path: |
+            reports/drift_report.json
+            reports/drift_report.html
+            reports/drift_alert.md
+            reports/metrics.json
+            reports/model_selection.json

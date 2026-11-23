@@ -1,0 +1,15 @@
+cmd: python src/data_ingestion.py
+deps:
+- path: data/raw/phone_addiction_dataset.csv
+  hash: md5
+  md5: 5093956ff225df7d507ab0af0215ec78
+  size: 595229
+- path: src/data_ingestion.py
+  hash: md5
+  md5: 4d5bab06043a43fc73895a687c95ba0e
+  size: 2730
+outs:
+- path: data/ingested/phone_addiction.csv
+  hash: md5
+  md5: a6f28fb7aabf2de2094b11d987ce836c
+  size: 450590

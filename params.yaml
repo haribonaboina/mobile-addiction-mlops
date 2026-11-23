@@ -1,0 +1,41 @@
+# ---------------------------------------------------------------
+# Mobile Usage Addiction Prediction - MLOps Pipeline Parameters
+# ---------------------------------------------------------------
+test_size: 0.2
+random_state: 42
+cv_folds: 5
+n_trials: 15
+experiment_name: Mobile_Addiction_MLOps_Pipeline
+
+# ---------------------------------------------------------------
+# Automated Multi-Criteria Champion Selection Policy
+# ---------------------------------------------------------------
+selection:
+  # Hard filter: Overfitting gap (train R2 - validation R2) in percentage points
+  # must be STRICTLY below this threshold.
+  max_r2_gap_pct: 5.0
+
+  # Validation R2 tolerance: Models within this many percentage points of the best
+  # eligible validation R2 are considered equally accurate finalists.
+  r2_tolerance_pct: 1.0
+
+  # Multi-criteria weights for tie-breaking among finalists (lower is better, sum to 1.0)
+  weights:
+    model_size_mb: 0.4
+    training_time_seconds: 0.3
+    prediction_time_ms: 0.3
+
+  # Fallback if no model satisfies the gap rule: "smallest_gap" or "error"
+  fallback_if_none_eligible: smallest_gap
+
+  # Optuna search penalty for overfitting configurations
+  gap_penalty_in_search: true
+  gap_penalty_weight: 1.0
+
+# ---------------------------------------------------------------
+# Timing and Benchmarking Settings
+# ---------------------------------------------------------------
+measurement:
+  training_time_repeats: 3        # repeated N times, median reported
+  prediction_n_samples: 50        # single-row predictions per repetition
+  prediction_repeats: 5           # repetitions, median reported

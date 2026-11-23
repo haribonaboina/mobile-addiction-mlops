@@ -1,0 +1,145 @@
+name: Mobile Addiction MLOps CI/CD
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  PYTHON_VERSION: "3.11"
+  IMAGE_NAME: mobile-addiction-predictor
+  MIN_TEST_R2: "0.85"   # minimum champion test R2 score
+
+jobs:
+  train:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: pip
+          cache-dependency-path: requirements-dvc.txt
+
+      - name: Install dependencies
+        run: pip install -r requirements-dvc.txt
+
+      - name: Run DVC pipeline (ingest, preprocess, engineer, train, evaluate)
+        run: dvc repro
+
+      - name: Show evaluation metrics
+        run: dvc metrics show
+
+      - name: Run unit and integration tests (pytest)
+        run: pytest tests/ -v
+
+      - name: Run production data drift monitoring baseline
+        run: python src/monitor_drift.py --generate-sample-data
+
+      - name: Publish model comparison to step summary
+        if: always()
+        run: |
+          if [ -f reports/model_comparison.md ]; then
+            cat reports/model_comparison.md >> "$GITHUB_STEP_SUMMARY"
+          fi
+          if [ -f reports/drift_alert.md ]; then
+            cat reports/drift_alert.md >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Quality gate (R2 performance, overfitting gap, selection sanity)
+        run: |
+          python - <<'PY'
+          import json, os, sys, yaml
+
+          metrics = json.load(open("reports/metrics.json"))
+          selection = json.load(open("reports/model_selection.json"))
+          params = yaml.safe_load(open("params.yaml"))
+
+          min_r2 = float(os.environ["MIN_TEST_R2"])
+          max_gap = float(params["selection"]["max_r2_gap_pct"])
+
+          test_r2 = metrics["test_r2"]
+          gap = metrics["champion_r2_gap_pct"]
+          champion = selection["champion"]["display_name"]
+          fallback = selection["selection_policy"]["fallback_used"]
+
+          print(f"Champion: {champion}")
+          print(f"Test R2       : {test_r2:.4f} (min required {min_r2})")
+          print(f"Overfitting Gap: {gap:.2f} pp (must be < {max_gap})")
+          print(f"Fallback used : {fallback}")
+
+          failures = []
+          if test_r2 < min_r2:
+              failures.append(f"test R2 ({test_r2:.4f}) below minimum {min_r2}")
+          if gap >= max_gap:
+              failures.append(f"champion gap ({gap:.2f}pp) exceeds threshold {max_gap}pp")
+
+          if failures:
+              print("QUALITY GATE FAILED: " + "; ".join(failures))
+              sys.exit(1)
+          print("Quality gate passed successfully.")
+          PY
+
+      - name: Upload champion model and artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: model-artifacts
+          path: |
+            models/model.pkl
+            reports/metrics.json
+            reports/evaluation_details.json
+            reports/model_selection.json
+            reports/model_comparison.csv
+            reports/model_comparison.md
+            reports/drift_report.json
+            reports/drift_report.html
+            data/processed/X_train.csv
+          if-no-files-found: error
+
+  docker:
+    needs: train
+    runs-on: ubuntu-latest
+    env:
+      HAS_DOCKERHUB: ${{ secrets.DOCKERHUB_USERNAME != '' && secrets.DOCKERHUB_TOKEN != '' }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download champion model and artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: model-artifacts
+          path: artifacts
+
+      - name: Assemble production container context
+        run: |
+          mkdir -p models reports data/processed
+          cp artifacts/models/model.pkl models/model.pkl
+          cp -r artifacts/reports/* reports/ 2>/dev/null || true
+          cp artifacts/data/processed/X_train.csv data/processed/X_train.csv 2>/dev/null || true
+
+      - name: Build Docker image
+        run: docker build -t $IMAGE_NAME:latest .
+
+      - name: Smoke test container
+        run: |
+          docker run -d --name predictor-app -p 8501:8501 $IMAGE_NAME:latest
+          for i in $(seq 1 30); do
+            if curl -sf http://localhost:8501/_stcore/health; then
+              echo "Application is healthy"; exit 0
+            fi
+            sleep 2
+          done
+          echo "App healthcheck failed"; docker logs predictor-app; exit 1

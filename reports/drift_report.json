@@ -1,0 +1,163 @@
+{
+    "timestamp": "2026-11-23T07:25:51.806474+00:00",
+    "total_features": 15,
+    "drifted_features": 4,
+    "drift_share_pct": 26.67,
+    "dataset_drift_detected": false,
+    "p_value_threshold": 0.05,
+    "drift_share_threshold": 0.33,
+    "reference_samples": 4774,
+    "current_samples": 50,
+    "features": {
+        "daily_usage_hours": {
+            "drift_detected": false,
+            "p_value": 0.35773,
+            "ks_statistic": 0.1284,
+            "reference_mean": 5.027,
+            "reference_std": 1.942,
+            "current_mean": 5.162,
+            "current_std": 1.386,
+            "mean_shift": 0.135
+        },
+        "sleep_hours": {
+            "drift_detected": false,
+            "p_value": 0.191484,
+            "ks_statistic": 0.1505,
+            "reference_mean": 6.48,
+            "reference_std": 1.49,
+            "current_mean": 6.521,
+            "current_std": 1.039,
+            "mean_shift": 0.041
+        },
+        "exercise_hours": {
+            "drift_detected": false,
+            "p_value": 0.156448,
+            "ks_statistic": 0.157,
+            "reference_mean": 1.045,
+            "reference_std": 0.733,
+            "current_mean": 1.176,
+            "current_std": 0.603,
+            "mean_shift": 0.131
+        },
+        "phone_checks_per_day": {
+            "drift_detected": true,
+            "p_value": 0.003099,
+            "ks_statistic": 0.2511,
+            "reference_mean": 83.003,
+            "reference_std": 37.588,
+            "current_mean": 87.037,
+            "current_std": 21.943,
+            "mean_shift": 4.034
+        },
+        "apps_used_daily": {
+            "drift_detected": false,
+            "p_value": 0.060488,
+            "ks_statistic": 0.1843,
+            "reference_mean": 12.661,
+            "reference_std": 4.608,
+            "current_mean": 12.45,
+            "current_std": 3.781,
+            "mean_shift": -0.21
+        },
+        "time_on_social_media": {
+            "drift_detected": false,
+            "p_value": 0.908624,
+            "ks_statistic": 0.077,
+            "reference_mean": 2.506,
+            "reference_std": 0.99,
+            "current_mean": 2.485,
+            "current_std": 0.85,
+            "mean_shift": -0.021
+        },
+        "time_on_gaming": {
+            "drift_detected": false,
+            "p_value": 0.056099,
+            "ks_statistic": 0.1863,
+            "reference_mean": 1.519,
+            "reference_std": 0.937,
+            "current_mean": 1.523,
+            "current_std": 0.536,
+            "mean_shift": 0.003
+        },
+        "weekend_minus_daily": {
+            "drift_detected": true,
+            "p_value": 8e-06,
+            "ks_statistic": 0.3466,
+            "reference_mean": 0.983,
+            "reference_std": 2.794,
+            "current_mean": 1.345,
+            "current_std": 0.78,
+            "mean_shift": 0.362
+        },
+        "usage_per_check": {
+            "drift_detected": true,
+            "p_value": 0.019507,
+            "ks_statistic": 0.2123,
+            "reference_mean": 0.078,
+            "reference_std": 0.059,
+            "current_mean": 0.062,
+            "current_std": 0.023,
+            "mean_shift": -0.016
+        },
+        "checks_per_hour": {
+            "drift_detected": true,
+            "p_value": 0.016692,
+            "ks_statistic": 0.2159,
+            "reference_mean": 25.692,
+            "reference_std": 77.96,
+            "current_mean": 17.695,
+            "current_std": 6.235,
+            "mean_shift": -7.997
+        },
+        "social_gaming_total": {
+            "drift_detected": false,
+            "p_value": 0.505657,
+            "ks_statistic": 0.1139,
+            "reference_mean": 4.025,
+            "reference_std": 1.351,
+            "current_mean": 4.007,
+            "current_std": 1.014,
+            "mean_shift": -0.018
+        },
+        "leisure_share": {
+            "drift_detected": false,
+            "p_value": 0.220542,
+            "ks_statistic": 0.1458,
+            "reference_mean": 1.264,
+            "reference_std": 3.714,
+            "current_mean": 0.824,
+            "current_std": 0.328,
+            "mean_shift": -0.44
+        },
+        "apps_x_usage": {
+            "drift_detected": false,
+            "p_value": 0.557463,
+            "ks_statistic": 0.1094,
+            "reference_mean": 63.776,
+            "reference_std": 35.242,
+            "current_mean": 66.023,
+            "current_std": 31.899,
+            "mean_shift": 2.247
+        },
+        "usage_sleep_ratio": {
+            "drift_detected": false,
+            "p_value": 0.209944,
+            "ks_statistic": 0.1475,
+            "reference_mean": 0.809,
+            "reference_std": 0.384,
+            "current_mean": 0.798,
+            "current_std": 0.246,
+            "mean_shift": -0.011
+        },
+        "bedtime_share": {
+            "drift_detected": false,
+            "p_value": 0.553772,
+            "ks_statistic": 0.1097,
+            "reference_mean": 0.313,
+            "reference_std": 0.941,
+            "current_mean": 0.201,
+            "current_std": 0.105,
+            "mean_shift": -0.112
+        }
+    }
+}

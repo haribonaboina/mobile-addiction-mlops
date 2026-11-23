@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Production Data Drift Report</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; margin: 2rem; background: #f8fafc; color: #1e293b; }
+        .header { background: white; padding: 1.5rem; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 2rem; }
+        .status-badge { display: inline-block; padding: 0.5rem 1rem; border-radius: 9999px; color: white; background: #38a169; font-weight: bold; font-size: 1.1rem; }
+        table { width: 100%; border-collapse: collapse; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        th, td { padding: 0.75rem 1rem; text-align: left; border-bottom: 1px solid #e2e8f0; }
+        th { background: #f1f5f9; font-weight: 600; }
+        tr:hover { background: #f8fafc; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Mobile Usage Addiction Predictor - Data Drift Monitoring</h1>
+        <p>Generated at: <code>2026-11-23T07:25:51.806474+00:00</code></p>
+        <div class="status-badge">HEALTHY DISTRIBUTION</div>
+        <p style="margin-top: 1rem;">
+            Drifted features: <strong>4 / 15</strong>
+            (26.67%) | Reference baseline samples: <code>4774</code> | Production logs: <code>50</code>
+        </p>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>Feature Name</th>
+                <th>Status</th>
+                <th>p-value (KS Test)</th>
+                <th>KS Statistic</th>
+                <th>Baseline (Mean ± Std)</th>
+                <th>Production (Mean ± Std)</th>
+                <th>Shift</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+        <tr>
+            <td><strong>daily_usage_hours</strong></td>
+            <td><span style="color: #38a169; font-weight: bold;">OK</span></td>
+            <td>0.3577</td>
+            <td>0.1284</td>
+            <td>5.03 ± 1.94</td>
+            <td>5.16 ± 1.39</td>
+            <td>+0.14</td>
+        </tr>
+        
+        <tr>
+            <td><strong>sleep_hours</strong></td>
+            <td><span style="color: #38a169; font-weight: bold;">OK</span></td>
+            <td>0.1915</td>
+            <td>0.1505</td>
+            <td>6.48 ± 1.49</td>
+            <td>6.52 ± 1.04</td>
+            <td>+0.04</td>
+        </tr>
+        
+        <tr>
+            <td><strong>exercise_hours</strong></td>
+            <td><span style="color: #38a169; font-weight: bold;">OK</span></td>
+            <td>0.1564</td>
+            <td>0.1570</td>
+            <td>1.04 ± 0.73</td>
+            <td>1.18 ± 0.60</td>
+            <td>+0.13</td>
+        </tr>
+        
+        <tr>
+            <td><strong>phone_checks_per_day</strong></td>
+            <td><span style="color: #e53e3e; font-weight: bold;">DRIFT</span></td>
+            <td>0.0031</td>
+            <td>0.2511</td>
+            <td>83.00 ± 37.59</td>
+            <td>87.04 ± 21.94</td>
+            <td>+4.03</td>
+        </tr>
+        
+        <tr>
+            <td><strong>apps_used_daily</strong></td>
+            <td><span style="color: #38a169; font-weight: bold;">OK</span></td>
+            <td>0.0605</td>
+            <td>0.1843</td>
+            <td>12.66 ± 4.61</td>
+            <td>12.45 ± 3.78</td>
+            <td>-0.21</td>
+        </tr>
+        
+        <tr>
+            <td><strong>time_on_social_media</strong></td>
+            <td><span style="color: #38a169; font-weight: bold;">OK</span></td>
+            <td>0.9086</td>
+            <td>0.0770</td>
+            <td>2.51 ± 0.99</td>
+            <td>2.48 ± 0.85</td>
+            <td>-0.02</td>
+        </tr>
+        
+        <tr>
+            <td><strong>time_on_gaming</strong></td>
+            <td><span style="color: #38a169; font-weight: bold;">OK</span></td>
+            <td>0.0561</td>
+            <td>0.1863</td>
+            <td>1.52 ± 0.94</td>
+            <td>1.52 ± 0.54</td>
+            <td>+0.00</td>
+        </tr>
+        
+        <tr>
+            <td><strong>weekend_minus_daily</strong></td>
+            <td><span style="color: #e53e3e; font-weight: bold;">DRIFT</span></td>
+            <td>0.0000</td>
+            <td>0.3466</td>
+            <td>0.98 ± 2.79</td>
+            <td>1.34 ± 0.78</td>
+            <td>+0.36</td>
+        </tr>
+        
+        <tr>
+            <td><strong>usage_per_check</strong></td>
+            <td><span style="color: #e53e3e; font-weight: bold;">DRIFT</span></td>
+            <td>0.0195</td>
+            <td>0.2123</td>
+            <td>0.08 ± 0.06</td>
+            <td>0.06 ± 0.02</td>
+            <td>-0.02</td>
+        </tr>
+        
+        <tr>
+            <td><strong>checks_per_hour</strong></td>
+            <td><span style="color: #e53e3e; font-weight: bold;">DRIFT</span></td>
+            <td>0.0167</td>
+            <td>0.2159</td>
+            <td>25.69 ± 77.96</td>
+            <td>17.70 ± 6.24</td>
+            <td>-8.00</td>
+        </tr>
+        
+        <tr>
+            <td><strong>social_gaming_total</strong></td>
+            <td><span style="color: #38a169; font-weight: bold;">OK</span></td>
+            <td>0.5057</td>
+            <td>0.1139</td>
+            <td>4.03 ± 1.35</td>
+            <td>4.01 ± 1.01</td>
+            <td>-0.02</td>
+        </tr>
+        
+        <tr>
+            <td><strong>leisure_share</strong></td>
+            <td><span style="color: #38a169; font-weight: bold;">OK</span></td>
+            <td>0.2205</td>
+            <td>0.1458</td>
+            <td>1.26 ± 3.71</td>
+            <td>0.82 ± 0.33</td>
+            <td>-0.44</td>
+        </tr>
+        
+        <tr>
+            <td><strong>apps_x_usage</strong></td>
+            <td><span style="color: #38a169; font-weight: bold;">OK</span></td>
+            <td>0.5575</td>
+            <td>0.1094</td>
+            <td>63.78 ± 35.24</td>
+            <td>66.02 ± 31.90</td>
+            <td>+2.25</td>
+        </tr>
+        
+        <tr>
+            <td><strong>usage_sleep_ratio</strong></td>
+            <td><span style="color: #38a169; font-weight: bold;">OK</span></td>
+            <td>0.2099</td>
+            <td>0.1475</td>
+            <td>0.81 ± 0.38</td>
+            <td>0.80 ± 0.25</td>
+            <td>-0.01</td>
+        </tr>
+        
+        <tr>
+            <td><strong>bedtime_share</strong></td>
+            <td><span style="color: #38a169; font-weight: bold;">OK</span></td>
+            <td>0.5538</td>
+            <td>0.1097</td>
+            <td>0.31 ± 0.94</td>
+            <td>0.20 ± 0.10</td>
+            <td>-0.11</td>
+        </tr>
+        
+        </tbody>
+    </table>
+</body>
+</html>

@@ -1,0 +1,62 @@
+{
+    "champion_model": "GradientBoosting",
+    "selection_basis": "Multi-criteria optimization: Overfitting gap strictly below 5.0%, highest validation R2, and weighted tie-breaker across size and latency.",
+    "selection_explanation": "Gradient Boosting is selected as champion: validation R2 = 99.05%, gap = 0.93pp (limit 5.0%), model size = 2.792 MB, train time = 11.21s, prediction latency = 88.98ms (selection cost = 0.0000).",
+    "selection_policy": {
+        "max_r2_gap_pct": 5.0,
+        "r2_tolerance_pct": 1.0,
+        "weights": {
+            "model_size_mb": 0.4,
+            "training_time_seconds": 0.3,
+            "prediction_time_ms": 0.3
+        },
+        "fallback_used": false
+    },
+    "champion_metrics": {
+        "r2": 0.9959,
+        "mae": 0.0483,
+        "rmse": 0.1051,
+        "pearson_corr": 0.998,
+        "accuracy_within_1pt": 1.0,
+        "mean_residual": 0.0056,
+        "std_residual": 0.1049
+    },
+    "all_models_test_metrics": {
+        "LinearRegression": {
+            "r2": 0.8584,
+            "mae": 0.4467,
+            "rmse": 0.614,
+            "pearson_corr": 0.9432,
+            "accuracy_within_1pt": 0.8827,
+            "mean_residual": 0.1459,
+            "std_residual": 0.5964
+        },
+        "DecisionTree": {
+            "r2": 0.9009,
+            "mae": 0.2878,
+            "rmse": 0.5138,
+            "pearson_corr": 0.9495,
+            "accuracy_within_1pt": 0.933,
+            "mean_residual": -0.0066,
+            "std_residual": 0.5137
+        },
+        "RandomForest": {
+            "r2": 0.9765,
+            "mae": 0.1463,
+            "rmse": 0.2501,
+            "pearson_corr": 0.9893,
+            "accuracy_within_1pt": 0.9916,
+            "mean_residual": -0.0087,
+            "std_residual": 0.25
+        },
+        "GradientBoosting": {
+            "r2": 0.9959,
+            "mae": 0.0483,
+            "rmse": 0.1051,
+            "pearson_corr": 0.998,
+            "accuracy_within_1pt": 1.0,
+            "mean_residual": 0.0056,
+            "std_residual": 0.1049
+        }
+    }
+}

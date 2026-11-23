@@ -1,0 +1,29 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+myenv/
+venv/
+.venv/
+env/
+
+# MLflow
+mlruns/
+.mlflow/
+
+# Pytest / coverage
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Local monitoring logs
+data/monitoring/*.csv
+!data/monitoring/.gitkeep
+
+# OS / Editor artifacts
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

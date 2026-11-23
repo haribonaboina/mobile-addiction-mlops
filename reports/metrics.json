@@ -1,0 +1,15 @@
+{
+    "test_r2": 0.9959,
+    "test_mae": 0.0483,
+    "test_rmse": 0.1051,
+    "test_pearson_corr": 0.998,
+    "test_accuracy_within_1pt": 1.0,
+    "champion_cv_r2": 0.9905,
+    "champion_training_r2_pct": 99.98,
+    "champion_validation_r2_pct": 99.05,
+    "champion_r2_gap_pct": 0.93,
+    "champion_model_size_mb": 2.7923,
+    "champion_training_time_seconds": 11.205,
+    "champion_prediction_time_ms": 88.9829,
+    "test_vs_validation_gap_pct": -0.54
+}

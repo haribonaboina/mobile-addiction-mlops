@@ -1,0 +1,52 @@
+cmd: python src/model_building.py
+deps:
+- path: data/processed/X_train.csv
+  hash: md5
+  md5: 7dba9f60b31275f92adef70a42a9d3e0
+  size: 686270
+- path: data/processed/y_train.csv
+  hash: md5
+  md5: 86cc4ba6ce2ca6178ee7d04f6a386ef5
+  size: 26321
+- path: src/model_building.py
+  hash: md5
+  md5: d77b2ddf93a25a86f0c27dc168875cf8
+  size: 15930
+params:
+  params.yaml:
+    cv_folds: 5
+    experiment_name: Mobile_Addiction_MLOps_Pipeline
+    measurement:
+      training_time_repeats: 3
+      prediction_n_samples: 50
+      prediction_repeats: 5
+    n_trials: 15
+    random_state: 42
+    selection:
+      max_r2_gap_pct: 5.0
+      r2_tolerance_pct: 1.0
+      weights:
+        model_size_mb: 0.4
+        training_time_seconds: 0.3
+        prediction_time_ms: 0.3
+      fallback_if_none_eligible: smallest_gap
+      gap_penalty_in_search: true
+      gap_penalty_weight: 1.0
+outs:
+- path: models
+  hash: md5
+  md5: 978c339deb8a1de72ab05075f6ddd60c.dir
+  size: 19685236
+  nfiles: 5
+- path: reports/model_comparison.csv
+  hash: md5
+  md5: a4d1c1b1cdc797f59121be64c3a3cee9
+  size: 401
+- path: reports/model_comparison.md
+  hash: md5
+  md5: f80934f92f1aa012d6993c6f3fbff082
+  size: 821
+- path: reports/model_selection.json
+  hash: md5
+  md5: 934da097efaedcd796d23e4dd56fb854
+  size: 3486

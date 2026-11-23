@@ -1,0 +1,1 @@
+[{"md5": "df3401ffb70a96be648be9c6ddacb5b7", "relpath": "DecisionTree.pkl"}, {"md5": "55c2dd85da7930ebe5b2dc6e25c43a43", "relpath": "GradientBoosting.pkl"}, {"md5": "6dd3484f9586b9bc5462d22b08fe2e0b", "relpath": "LinearRegression.pkl"}, {"md5": "497c8f6334a272e3e56b6d2c8abb33e5", "relpath": "RandomForest.pkl"}, {"md5": "55c2dd85da7930ebe5b2dc6e25c43a43", "relpath": "model.pkl"}]
