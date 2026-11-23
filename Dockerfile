@@ -6,7 +6,7 @@ RUN useradd -m -u 1000 appuser
 WORKDIR /app
 
 COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir --default-timeout=1000 -r requirements.txt
 
 # Copy application code, champion model, reference data, and reports
 COPY app.py .
