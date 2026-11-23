@@ -12,6 +12,11 @@ env/
 # MLflow
 mlruns/
 .mlflow/
+mlflow.db
+
+# DVC runtime locks & cache
+.dvc/cache/
+.dvc/tmp/
 
 # Pytest / coverage
 .pytest_cache/
