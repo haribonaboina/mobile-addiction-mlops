@@ -10,6 +10,7 @@ RUN pip install --no-cache-dir --default-timeout=1000 -r requirements.txt
 
 # Copy application code, champion model, reference data, and reports
 COPY app.py .
+COPY .streamlit/ .streamlit/
 COPY src/ src/
 COPY models/model.pkl models/model.pkl
 COPY reports/ reports/
