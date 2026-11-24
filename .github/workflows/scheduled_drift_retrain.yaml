@@ -51,6 +51,7 @@ jobs:
         if: env.DRIFT_DETECTED == 'true'
         run: |
           echo "Drift detected above threshold! Retraining pipeline..."
+          dvc config core.no_scm true
           dvc repro
           pytest tests/ -v
 
